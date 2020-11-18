@@ -103,6 +103,28 @@ def send_logs():
                 text = log.as_string()
                 print('test msg.as_string')
 
-                
+                setup = smtplib.SMTP('smtp.gmail.com', 587)
+                setup.ehlo()
+                setup.starttls()
+                print('starttls here: ')
+
+                setup.ehlo()
+                setup.login(sendEmail, sendPassword)
+                setup.sendmail(sendEmail, receiveEmail, text)
+                print('Sent to the provided email', receiveEmail)
+
+                attachment.close()
+                setup.close()
+
+                os.remove(toDeleteFile[0])
+
+                displayData = displayData[1:]
+                toDeleteFile = []
+                print("deleting the log once we've sent to our email")
+
+            except:
+                pass
+
+
 
 
