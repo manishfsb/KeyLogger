@@ -52,3 +52,9 @@ def write_file(count):
     fileName = 'log.txt'
     file = savingLocation + fileName
     toDeleteFile.append(file)                                #Saving the file so that we can delete it once we've emailed ourself
+
+    with open(file, 'w') as writingFile:
+        writingFile.write(''.join(displayData))
+    print('Success writing to file')
+
+    
